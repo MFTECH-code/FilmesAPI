@@ -1,4 +1,4 @@
-﻿using Alura.WebApi.Data.DTOs.Filme;
+﻿using Alura.WebApi.Data.DTOs;
 using Alura.WebApi.Models;
 using AutoMapper;
 

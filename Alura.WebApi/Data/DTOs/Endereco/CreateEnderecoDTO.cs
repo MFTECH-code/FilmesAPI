@@ -1,4 +1,4 @@
-﻿namespace Alura.WebApi.Data.DTOs.Endereco
+﻿namespace Alura.WebApi.Data.DTOs
 {
     public class CreateEnderecoDTO
     {

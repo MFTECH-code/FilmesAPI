@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Alura.WebApi.Data.DTOs.Filme
+namespace Alura.WebApi.Data.DTOs
 {
     public class CreateFilmeDTO
     {

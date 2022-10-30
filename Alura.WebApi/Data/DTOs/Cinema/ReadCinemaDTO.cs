@@ -1,6 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Alura.WebApi.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace Alura.WebApi.Data.DTOs.Cinema
+
+namespace Alura.WebApi.Data.DTOs
 {
     public class ReadCinemaDTO
     {
@@ -9,5 +11,6 @@ namespace Alura.WebApi.Data.DTOs.Cinema
         public int Id { get; set; }
         [Required(ErrorMessage = "O campo de nome é obrigatório")]
         public string Nome { get; set; }
+        public Endereco Endereco { get; set; }
     }
 }

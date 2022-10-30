@@ -1,5 +1,5 @@
 ﻿using Alura.WebApi.Data;
-using Alura.WebApi.Data.DTOs.Endereco;
+using Alura.WebApi.Data.DTOs;
 using Alura.WebApi.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;

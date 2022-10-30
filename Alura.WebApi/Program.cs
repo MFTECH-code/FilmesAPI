@@ -10,12 +10,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<Alura.WebApi.Data.AppDbContext>(opts =>
-{
-    opts.UseMySql(
-        builder.Configuration.GetConnectionString("FilmeConnection"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("FilmeConnection")));
-});
+builder.Services.AddDbContext<AppDbContext>(opts => opts.UseMySql(
+    builder.Configuration.GetConnectionString("FilmeConnection"),
+    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("FilmeConnection")))
+);
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

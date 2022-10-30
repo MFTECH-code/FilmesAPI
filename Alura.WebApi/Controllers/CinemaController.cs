@@ -1,8 +1,9 @@
 ﻿using Alura.WebApi.Data;
-using Alura.WebApi.Data.DTOs.Cinema;
+using Alura.WebApi.Data.DTOs;
 using Alura.WebApi.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Alura.WebApi.Controllers
 {
@@ -29,15 +30,18 @@ namespace Alura.WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Cinema> RecuperaCinemas([FromQuery] string nomeDoFilme)
+        public IEnumerable<Cinema> RecuperaCinemas()
         {
-            return _context.Cinemas;
+            return _context.Cinemas
+                .Include(c => c.Endereco);
         }
 
         [HttpGet("{id}")]
         public IActionResult RecuperaCinemasPorId(int id)
         {
-            Cinema cinema = _context.Cinemas.FirstOrDefault(cinema => cinema.Id == id);
+            Cinema cinema = _context.Cinemas
+                .Include(c => c.Endereco)
+                .FirstOrDefault(cinema => cinema.Id == id);
             if (cinema != null)
             {
                 ReadCinemaDTO cinemaDto = _mapper.Map<ReadCinemaDTO>(cinema);
