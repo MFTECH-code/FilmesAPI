@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Alura.WebApi.Migrations
 {
-    [DbContext(typeof(FilmeContext))]
+    [DbContext(typeof(Data.AppDbContext))]
     [Migration("20221028011118_CriandoTabelaDeFilme")]
     partial class CriandoTabelaDeFilme
     {
