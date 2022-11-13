@@ -30,9 +30,17 @@ namespace Alura.WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Filme> RecuperarFilmes()
+        public IActionResult RecuperarFilmes([FromQuery] int? classificacaoEtaria = null)
         {
-            return _context.Filmes;
+            if (classificacaoEtaria == null)
+                return Ok(_mapper.Map<List<ReadFilmeDTO>>(_context.Filmes.ToList()));
+            
+            var filmes = _context.Filmes.Where(f => f.ClassificacaoEtaria == classificacaoEtaria).ToList();
+
+            if (filmes == null)
+                return NotFound();
+            
+            return Ok(_mapper.Map<List<ReadFilmeDTO>>(filmes));
         }
 
         [HttpGet("{id}")]
