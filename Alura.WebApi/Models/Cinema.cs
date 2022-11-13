@@ -13,5 +13,7 @@ namespace Alura.WebApi.Models
         public int EnderecoId { get; set; }
         public Gerente Gerente { get; set; }
         public int GerenteId { get; set; }
+        [JsonIgnore]
+        public List<Sessao> Sessoes { get; set; }
     }
 }

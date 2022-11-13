@@ -3,6 +3,7 @@ using System;
 using Alura.WebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Alura.WebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class FilmeContextModelSnapshot : ModelSnapshot
+    [Migration("20221113013611_Sessoes")]
+    partial class Sessoes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

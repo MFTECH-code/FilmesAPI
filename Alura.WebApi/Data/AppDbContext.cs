@@ -21,16 +21,26 @@ namespace Alura.WebApi.Data
                 .WithMany(g => g.Cinemas)
                 .HasForeignKey(c => c.GerenteId);
 
-                // Não deixar que o cinema seja excluido com a exclusão do cinema               
-                //.OnDelete(DeleteBehavior.Restrict);
-                // ou
-                // .IsRequired(false);
+            // Não deixar que o cinema seja excluido com a exclusão do cinema               
+            //.OnDelete(DeleteBehavior.Restrict);
+            // ou
+            // .IsRequired(false);
 
+            builder.Entity<Sessao>()
+                .HasOne(s => s.Filme)
+                .WithMany(f => f.Sessoes)
+                .HasForeignKey(s => s.FilmeId);
+
+            builder.Entity<Sessao>()
+               .HasOne(s => s.Cinema)
+               .WithMany(c => c.Sessoes)
+               .HasForeignKey(s => s.CinemaId);
         }
 
         public DbSet<Filme> Filmes { get; set; }
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Gerente> Gerentes { get; set; }
+        public DbSet<Sessao> Sessoes { get; set; }
     }
 }
