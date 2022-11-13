@@ -16,7 +16,7 @@ namespace Alura.WebApi.Data.DTOs
         [Range(1, 600, ErrorMessage = "A duração deve ser de 1 á no máximo 600 minutos")]
         public int Duracao { get; set; }
         public int ClassificacaoEtaria { get; set; }
-        public DateTime HoraDaConsulta { get; set; }
+        public DateTime HoraDaConsulta { get; set; } = DateTime.Now;
 
     }
 }

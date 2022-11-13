@@ -1,4 +1,5 @@
 using Alura.WebApi.Data;
+using Alura.WebApi.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,8 @@ builder.Services.AddDbContext<AppDbContext>(opts => opts.UseMySql(
 );
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<FilmeService, FilmeService>();
 
 var app = builder.Build();
 
