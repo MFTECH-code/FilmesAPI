@@ -2,6 +2,7 @@
 using Alura.WebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Alura.WebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class FilmeContextModelSnapshot : ModelSnapshot
+    [Migration("20221030023959_Adicionando Gerente")]
+    partial class AdicionandoGerente
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,9 +29,6 @@ namespace Alura.WebApi.Migrations
                     b.Property<int>("EnderecoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GerenteId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -39,9 +38,7 @@ namespace Alura.WebApi.Migrations
                     b.HasIndex("EnderecoId")
                         .IsUnique();
 
-                    b.HasIndex("GerenteId");
-
-                    b.ToTable("Cinemas", (string)null);
+                    b.ToTable("Cinemas");
                 });
 
             modelBuilder.Entity("Alura.WebApi.Models.Endereco", b =>
@@ -63,7 +60,7 @@ namespace Alura.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Enderecos", (string)null);
+                    b.ToTable("Enderecos");
                 });
 
             modelBuilder.Entity("Alura.WebApi.Models.Filme", b =>
@@ -90,7 +87,7 @@ namespace Alura.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Filmes", (string)null);
+                    b.ToTable("Filmes");
                 });
 
             modelBuilder.Entity("Alura.WebApi.Models.Gerente", b =>
@@ -105,7 +102,7 @@ namespace Alura.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Gerentes", (string)null);
+                    b.ToTable("Gerentes");
                 });
 
             modelBuilder.Entity("Alura.WebApi.Models.Cinema", b =>
@@ -116,26 +113,13 @@ namespace Alura.WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Alura.WebApi.Models.Gerente", "Gerente")
-                        .WithMany("Cinemas")
-                        .HasForeignKey("GerenteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Endereco");
-
-                    b.Navigation("Gerente");
                 });
 
             modelBuilder.Entity("Alura.WebApi.Models.Endereco", b =>
                 {
                     b.Navigation("Cinema")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Alura.WebApi.Models.Gerente", b =>
-                {
-                    b.Navigation("Cinemas");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,15 +3,13 @@ using System.Text.Json.Serialization;
 
 namespace Alura.WebApi.Models
 {
-    public class Cinema
+    public class Gerente
     {
         [Key]
         [Required]
         public int Id { get; set; }
         public string Nome { get; set; }
-        public Endereco Endereco { get; set; }
-        public int EnderecoId { get; set; }
-        public Gerente Gerente { get; set; }
-        public int GerenteId { get; set; }
+        [JsonIgnore]
+        public List<Cinema> Cinemas { get; set; }
     }
 }

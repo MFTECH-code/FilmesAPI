@@ -2,6 +2,7 @@
 using Alura.WebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Alura.WebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class FilmeContextModelSnapshot : ModelSnapshot
+    [Migration("20221030031003_Adicionando relação entre cinemas e gerentes")]
+    partial class Adicionandorelaçãoentrecinemasegerentes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +43,7 @@ namespace Alura.WebApi.Migrations
 
                     b.HasIndex("GerenteId");
 
-                    b.ToTable("Cinemas", (string)null);
+                    b.ToTable("Cinemas");
                 });
 
             modelBuilder.Entity("Alura.WebApi.Models.Endereco", b =>
@@ -63,7 +65,7 @@ namespace Alura.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Enderecos", (string)null);
+                    b.ToTable("Enderecos");
                 });
 
             modelBuilder.Entity("Alura.WebApi.Models.Filme", b =>
@@ -90,7 +92,7 @@ namespace Alura.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Filmes", (string)null);
+                    b.ToTable("Filmes");
                 });
 
             modelBuilder.Entity("Alura.WebApi.Models.Gerente", b =>
@@ -105,7 +107,7 @@ namespace Alura.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Gerentes", (string)null);
+                    b.ToTable("Gerentes");
                 });
 
             modelBuilder.Entity("Alura.WebApi.Models.Cinema", b =>

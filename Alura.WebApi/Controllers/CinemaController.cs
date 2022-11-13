@@ -33,7 +33,8 @@ namespace Alura.WebApi.Controllers
         public IEnumerable<Cinema> RecuperaCinemas()
         {
             return _context.Cinemas
-                .Include(c => c.Endereco);
+                .Include(c => c.Endereco)
+                .Include(c => c.Gerente);
         }
 
         [HttpGet("{id}")]
@@ -41,6 +42,7 @@ namespace Alura.WebApi.Controllers
         {
             Cinema cinema = _context.Cinemas
                 .Include(c => c.Endereco)
+                .Include(c => c.Gerente)
                 .FirstOrDefault(cinema => cinema.Id == id);
             if (cinema != null)
             {
