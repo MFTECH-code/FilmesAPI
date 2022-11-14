@@ -19,6 +19,7 @@ builder.Services.AddDbContext<AppDbContext>(opts => opts.UseMySql(
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<FilmeService, FilmeService>();
+builder.Services.AddScoped<CinemaService, CinemaService>();
 
 var app = builder.Build();
 

@@ -1,9 +1,6 @@
-﻿using Alura.WebApi.Data;
-using Alura.WebApi.Data.DTOs;
-using Alura.WebApi.Models;
-using AutoMapper;
+﻿using Alura.WebApi.Data.DTOs;
+using Alura.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Alura.WebApi.Controllers
 {
@@ -11,57 +8,46 @@ namespace Alura.WebApi.Controllers
     [Route("[controller]")]
     public class CinemaController : ControllerBase
     {
-        private AppDbContext _context;
-        private IMapper _mapper;
+        private CinemaService _service;
 
-        public CinemaController(AppDbContext context, IMapper mapper)
+        public CinemaController(CinemaService service)
         {
-            _context = context;
-            _mapper = mapper;
+            _service = service;
         }
 
         [HttpPost]
         public IActionResult AdicionaCinema([FromBody] CreateCinemaDTO cinemaDto)
         {
-            Cinema cinema = _mapper.Map<Cinema>(cinemaDto);
-            _context.Cinemas.Add(cinema);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(RecuperaCinemasPorId), new { Id = cinema.Id }, cinema);
+            var cinema = _service.AdicionaCinema(cinemaDto);
+
+            return CreatedAtAction(nameof(RecuperaCinemaPorId), new { Id = cinema.Id }, cinema);
         }
 
         [HttpGet]
-        public IEnumerable<Cinema> RecuperaCinemas()
+        public IEnumerable<ReadCinemaDTO> RecuperaCinemas()
         {
-            return _context.Cinemas
-                .Include(c => c.Endereco)
-                .Include(c => c.Gerente);
+            return _service.RecuperaCinemas();
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaCinemasPorId(int id)
+        public IActionResult RecuperaCinemaPorId(int id)
         {
-            Cinema cinema = _context.Cinemas
-                .Include(c => c.Endereco)
-                .Include(c => c.Gerente)
-                .FirstOrDefault(cinema => cinema.Id == id);
-            if (cinema != null)
-            {
-                ReadCinemaDTO cinemaDto = _mapper.Map<ReadCinemaDTO>(cinema);
-                return Ok(cinemaDto);
-            }
-            return NotFound();
+            var cinema = _service.RecuperaCinemaPorId(id);
+            
+            if (cinema == null)
+                return NotFound();
+
+            return Ok(cinema);
         }
 
         [HttpPut("{id}")]
         public IActionResult AtualizaCinema(int id, [FromBody] UpdateCinemaDTO cinemaDto)
         {
-            Cinema cinema = _context.Cinemas.FirstOrDefault(cinema => cinema.Id == id);
-            if (cinema == null)
-            {
+            var result = _service.AtualizaCinema(id, cinemaDto);
+
+            if (result.IsFailed)
                 return NotFound();
-            }
-            _mapper.Map(cinemaDto, cinema);
-            _context.SaveChanges();
+
             return NoContent();
         }
 
@@ -69,14 +55,11 @@ namespace Alura.WebApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeletaCinema(int id)
         {
-            Cinema cinema = _context.Cinemas.FirstOrDefault(cinema => cinema.Id == id);
+            var result = _service.DeletaCinema(id);
             
-            if (cinema == null)
-            {
+            if (result.IsFailed)
                 return NotFound();
-            }
-            _context.Remove(cinema);
-            _context.SaveChanges();
+            
             return NoContent();
         }
     }
