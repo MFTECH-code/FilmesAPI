@@ -44,7 +44,8 @@ namespace Alura.WebApi.Services
         public List<ReadGerenteDTO> RecuperaGerentes()
         {
             var gerentes = _context.Gerentes
-                .Include(g => g.Cinemas);
+                .Include(g => g.Cinemas)
+                .ThenInclude(c => c.Endereco);
 
             return _mapper.Map<List<ReadGerenteDTO>>(gerentes);
         }
@@ -65,10 +66,13 @@ namespace Alura.WebApi.Services
         public Result DeletaGerente(int id)
         {
             var gerente = _context.Gerentes.FirstOrDefault(g => g.Id == id);
+            
             if (gerente == null)
                 return Result.Fail("Gerente não encontrado");
 
             _context.Gerentes.Remove(gerente);
+            _context.SaveChanges();
+
             return Result.Ok();
         }
     }

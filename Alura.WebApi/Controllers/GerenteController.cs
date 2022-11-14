@@ -51,7 +51,7 @@ namespace Alura.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeletaGerente(int id)
         {
             var result = _service.DeletaGerente(id);
