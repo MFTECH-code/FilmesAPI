@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Alura.WebApi.Data;
 using Alura.WebApi.Models;
-using AutoMapper;
 using Alura.WebApi.Data.DTOs.Sessao;
+using Alura.WebApi.Services;
 
 namespace Alura.WebApi.Controllers
 {
@@ -11,55 +9,38 @@ namespace Alura.WebApi.Controllers
     [ApiController]
     public class SessaoController : ControllerBase
     {
-        private readonly AppDbContext _context;
-        private readonly IMapper _mapper;
+        private SessaoService _service;
 
-        public SessaoController(AppDbContext context, IMapper mapper)
+        public SessaoController(SessaoService service)
         {
-            _context = context;
-            _mapper = mapper;
+            _service = service;
         }
 
 
         [HttpGet]
-        public IEnumerable<Sessao> RecuperaSessoes()
+        public IEnumerable<ReadSessaoDTO> RecuperaSessoes()
         {
-            return _context.Sessoes
-                .Include(s => s.Filme)
-                .Include(s => s.Cinema)
-                .ThenInclude(c => c.Endereco)
-                .Include(s => s.Cinema)
-                .ThenInclude(c => c.Gerente)
-                .AsQueryable();
+            return _service.RecuperaSessoes();
         }
 
         [HttpGet("{id}")]
         public ActionResult<ReadSessaoDTO> RecuperaSessaoPorId(int id)
         {
-            var sessao = _context.Sessoes
-                .Include(s => s.Filme)
-                .Include(s => s.Cinema)
-                .ThenInclude(c => c.Endereco)
-                .Include(s => s.Cinema)
-                .ThenInclude(c => c.Gerente)
-                .AsQueryable()
-                .FirstOrDefault(s => s.Id == id);
+            var sessao = _service.RecuperaSessaoPorId(id);
 
             if (sessao == null)
             {
                 return NotFound();
             }
 
-            return _mapper.Map<ReadSessaoDTO>(sessao);
+            return Ok(sessao);
         }
 
 
         [HttpPost]
         public ActionResult<Sessao> AdicionaSessao(CreateSessaoDTO sessaoDTO)
         {
-            var sessao = _mapper.Map<Sessao>(sessaoDTO);
-            _context.Sessoes.Add(sessao);
-            _context.SaveChanges();
+            var sessao = _service.AdicionaSessao(sessaoDTO);
 
             return CreatedAtAction("RecuperaSessaoPorId", new { id = sessao.Id }, sessao);
         }
