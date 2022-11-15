@@ -23,5 +23,21 @@ namespace Alura.UsuariosAPI.Controllers
             if (result.IsFailed) return Unauthorized(result.Errors);
             return Ok(new { Token = result.Successes.First().Message });
         }
+
+        [HttpPost("/solicita-reset")]
+        public IActionResult SolicitaResetSenhaUsuario(SolicitaResetRequest request)
+        {
+            var result = _loginService.SolicitaResetSenhaUsuario(request);
+            if (result.IsFailed) return Unauthorized(result.Errors);
+            return Ok(new { tokenRecuperacao = result.Successes.First().Message });
+        }
+
+        [HttpPost("/efetua-reset")]
+        public IActionResult EfetuaResetSenhaUsuario(EfetuaResetRequest request)
+        {
+            var result = _loginService.EfetuaResetSenhaUsuario(request);
+            if (result.IsFailed) return Unauthorized(result.Errors);
+            return Ok(new { message = result.Successes.First().Message });
+        }
     }
 }

@@ -32,5 +32,31 @@ namespace Alura.UsuariosAPI.Services
             }
             return Result.Fail("Login Falhou");
         }
+
+        public Result SolicitaResetSenhaUsuario(SolicitaResetRequest request)
+        {
+            var identityUser = RecuperaUsuarioPorEmail(request.Email);
+            if (identityUser != null)
+            {
+                var codigoDeRecuperacao = _signInManager.UserManager.GeneratePasswordResetTokenAsync(identityUser).Result;
+                return Result.Ok().WithSuccess(codigoDeRecuperacao);
+            }
+            return Result.Fail("Falha ao solicitar redefinição");
+
+        }
+
+        public Result EfetuaResetSenhaUsuario(EfetuaResetRequest request)
+        {
+            var identityUser = RecuperaUsuarioPorEmail(request.Email);
+            var resultIdentity = _signInManager.UserManager.ResetPasswordAsync(identityUser, request.Token, request.Password).Result;
+            if (resultIdentity.Succeeded) return Result.Ok().WithSuccess("Senha redefinida com sucesso");
+            return Result.Fail("Houve um erro na operação");
+        }
+
+        private IdentityUser<int>? RecuperaUsuarioPorEmail(string email)
+        {
+            return _signInManager.UserManager.Users.FirstOrDefault(u => u.NormalizedEmail == email.ToUpper());
+        }
+
     }
 }
