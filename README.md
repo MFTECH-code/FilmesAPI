@@ -11,5 +11,7 @@ Neste curso aprendi
  - Relacionamentos com EntityFramework 🎲
  - Linq 🎲
  - Identity 🔒
+ - Confirmação de conta por email utilizando MailKit e MimeKit
+ - Token com JwT
 
 **Observação:** No momento atual em que fiz o curso (27/10/2022) o instrutor estava utilizando a versão 5 do .net, esse meu projeto é uma versão atualizada com o .net 6
