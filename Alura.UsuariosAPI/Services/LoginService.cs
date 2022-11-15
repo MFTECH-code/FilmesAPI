@@ -27,7 +27,8 @@ namespace Alura.UsuariosAPI.Services
                     .Users
                     .FirstOrDefault(u => u.NormalizedUserName == request.Username.ToUpper());
                 
-                var token = _tokenService.CreateToken(identityUser);
+                var token = _tokenService.CreateToken(
+                    identityUser, _signInManager.UserManager.GetRolesAsync(identityUser).Result.FirstOrDefault());
                 return Result.Ok().WithSuccess(token.Value);
             }
             return Result.Fail("Login Falhou");

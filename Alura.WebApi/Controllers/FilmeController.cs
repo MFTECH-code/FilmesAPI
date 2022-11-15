@@ -1,5 +1,6 @@
 ﻿using Alura.WebApi.Data.DTOs;
 using Alura.WebApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Alura.WebApi.Controllers
@@ -16,6 +17,7 @@ namespace Alura.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public IActionResult AdicionaFilme([FromBody] CreateFilmeDTO filmeDto)
         {
             var filme = _service.AdicionaFilme(filmeDto);
