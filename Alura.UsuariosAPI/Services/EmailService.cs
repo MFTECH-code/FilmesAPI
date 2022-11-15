@@ -50,7 +50,8 @@ namespace Alura.UsuariosAPI.Services
         private MimeMessage CriaCorpoDoEmail(Mensagem mensagem)
         {
             var mensagemDeEmail = new MimeMessage();
-            mensagemDeEmail.From.Add(new MailboxAddress(_configuration.GetValue<string>("EmailSettings:From")));
+            var email = _configuration["EmailSettings:From"];
+            mensagemDeEmail.From.Add(new MailboxAddress(email));
             mensagemDeEmail.To.Add(mensagem.Destinatario.First());
             mensagemDeEmail.Subject = mensagem.Assunto;
             mensagemDeEmail.Body = new TextPart(MimeKit.Text.TextFormat.Text)
