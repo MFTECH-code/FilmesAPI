@@ -14,7 +14,8 @@ builder.Services.AddDbContext<UserDbContext>(options =>
 )));
 
 builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
-    .AddEntityFrameworkStores<UserDbContext>();
+    .AddEntityFrameworkStores<UserDbContext>()
+    .AddDefaultTokenProviders();
 
 // Configurando como nossa senha pode ser criada
 builder.Services.Configure<IdentityOptions>(options =>
@@ -22,6 +23,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
     options.Password.RequiredLength = 8;
+    options.SignIn.RequireConfirmedEmail = true;
 });
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -30,6 +32,7 @@ builder.Services.AddScoped<CadastroService, CadastroService>();
 builder.Services.AddScoped<LoginService, LoginService>();
 builder.Services.AddScoped<TokenService, TokenService>();
 builder.Services.AddScoped<LogoutService, LogoutService>();
+builder.Services.AddScoped<EmailService, EmailService>();
 
 var app = builder.Build();
 
