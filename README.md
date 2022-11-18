@@ -13,5 +13,7 @@ Neste curso aprendi
  - Identity 🔒
  - Confirmação de conta por email utilizando MailKit e MimeKit
  - Token com JwT
+ - Personalização de acesso á rotas utilizando roles e policy
+ - Criação de CustomIdentityUser com atributos personalizados
 
 **Observação:** No momento atual em que fiz o curso (27/10/2022) o instrutor estava utilizando a versão 5 do .net, esse meu projeto é uma versão atualizada com o .net 6
