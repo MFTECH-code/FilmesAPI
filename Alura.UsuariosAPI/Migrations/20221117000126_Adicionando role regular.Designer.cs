@@ -3,6 +3,7 @@ using System;
 using Alura.UsuariosAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,16 +11,82 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Alura.UsuariosAPI.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221117000126_Adicionando role regular")]
+    partial class Adicionandoroleregular
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Alura.UsuariosAPI.Models.CustomIdentityUser", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 99999,
+                            ConcurrencyStamp = "263904bd-a6f1-4665-87ed-2f93772f9b67",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 99998,
+                            ConcurrencyStamp = "99e53fc3-60b3-45d4-92ac-884361546401",
+                            Name = "regular",
+                            NormalizedName = "REGULAR"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,9 +98,6 @@ namespace Alura.UsuariosAPI.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
-
-                    b.Property<DateTime>("DataNascimento")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -91,84 +155,18 @@ namespace Alura.UsuariosAPI.Migrations
                         {
                             Id = 99999,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7fcdca20-8ea3-4614-b02d-a5a92fc89315",
-                            DataNascimento = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ConcurrencyStamp = "d8ac0e7b-ff82-4be4-ad74-6a76c6edfa09",
                             Email = "admin@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKAwFBsabSkWs32R0ieLexQQct+IEBWz6rVT5+mgTe7ot5oO9Gp7fxUnyAIbwbG90w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECOOb8JcDglsejnhdvpZAHa3eJBXaS55oQctVtpOZbuh1esyFIBoXPfmimWpd1jjMg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7bdcd796-3b02-427b-8011-8d2da2a79c31",
+                            SecurityStamp = "81a6c1ae-a81c-4861-9ac6-2bc7689f4295",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex");
-
-                    b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 99999,
-                            ConcurrencyStamp = "3cd5d30a-9964-4806-844d-5c64b4b5e33c",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = 99998,
-                            ConcurrencyStamp = "84f11f3d-8b7a-448d-8bbc-8e3d020ee4c7",
-                            Name = "regular",
-                            NormalizedName = "REGULAR"
-                        });
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
@@ -266,7 +264,7 @@ namespace Alura.UsuariosAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("Alura.UsuariosAPI.Models.CustomIdentityUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -275,7 +273,7 @@ namespace Alura.UsuariosAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("Alura.UsuariosAPI.Models.CustomIdentityUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -290,7 +288,7 @@ namespace Alura.UsuariosAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Alura.UsuariosAPI.Models.CustomIdentityUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -299,7 +297,7 @@ namespace Alura.UsuariosAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("Alura.UsuariosAPI.Models.CustomIdentityUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<int>", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

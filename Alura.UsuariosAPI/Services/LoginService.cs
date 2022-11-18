@@ -1,4 +1,5 @@
 ﻿using Alura.UsuariosAPI.Data.Requests;
+using Alura.UsuariosAPI.Models;
 using FluentResults;
 using Microsoft.AspNetCore.Identity;
 
@@ -6,10 +7,10 @@ namespace Alura.UsuariosAPI.Services
 {
     public class LoginService
     {
-        private SignInManager<IdentityUser<int>> _signInManager;
+        private SignInManager<CustomIdentityUser> _signInManager;
         private TokenService _tokenService;
 
-        public LoginService(SignInManager<IdentityUser<int>> signInManager, TokenService tokenService)
+        public LoginService(SignInManager<CustomIdentityUser> signInManager, TokenService tokenService)
         {
             _signInManager = signInManager;
             _tokenService = tokenService;
@@ -54,7 +55,7 @@ namespace Alura.UsuariosAPI.Services
             return Result.Fail("Houve um erro na operação");
         }
 
-        private IdentityUser<int>? RecuperaUsuarioPorEmail(string email)
+        private CustomIdentityUser? RecuperaUsuarioPorEmail(string email)
         {
             return _signInManager.UserManager.Users.FirstOrDefault(u => u.NormalizedEmail == email.ToUpper());
         }

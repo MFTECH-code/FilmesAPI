@@ -1,4 +1,5 @@
 using Alura.UsuariosAPI.Data;
+using Alura.UsuariosAPI.Models;
 using Alura.UsuariosAPI.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,7 @@ builder.Services.AddDbContext<UserDbContext>(options =>
     ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("UsuarioConnection")
 )));
 
-builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
+builder.Services.AddIdentity<CustomIdentityUser, IdentityRole<int>>()
     .AddEntityFrameworkStores<UserDbContext>()
     .AddDefaultTokenProviders();
 

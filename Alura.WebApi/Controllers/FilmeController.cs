@@ -25,6 +25,7 @@ namespace Alura.WebApi.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin, regular", Policy = "IdadeMinima")]
         public IActionResult RecuperarFilmes([FromQuery] int? classificacaoEtaria = null)
         {
             var filmes = _service.RecuperarFilmes(classificacaoEtaria);

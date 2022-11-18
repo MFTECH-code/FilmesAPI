@@ -1,6 +1,8 @@
+using Alura.WebApi.Authorization;
 using Alura.WebApi.Data;
 using Alura.WebApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -44,6 +46,16 @@ builder.Services.AddAuthentication(auth =>
         ClockSkew = TimeSpan.Zero
     };
 });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("IdadeMinima", policy =>
+    {
+        policy.AddRequirements(new IdadeMinimaRequirement(18));
+    });
+});
+
+builder.Services.AddSingleton<IAuthorizationHandler, IdadeMinimaHandler>();
 
 var app = builder.Build();
 

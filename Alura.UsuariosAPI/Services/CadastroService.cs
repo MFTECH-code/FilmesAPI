@@ -11,25 +11,22 @@ namespace Alura.UsuariosAPI.Services
     public class CadastroService
     {
         private IMapper _mapper;
-        private UserManager<IdentityUser<int>> _userManager;
+        private UserManager<CustomIdentityUser> _userManager;
         private EmailService _emailService;
-        private RoleManager<IdentityRole<int>> _roleManager;
 
-        public CadastroService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService emailService, RoleManager<IdentityRole<int>> roleManager)
+        public CadastroService(IMapper mapper, UserManager<CustomIdentityUser> userManager, EmailService emailService)
         {
             _mapper = mapper;
             _userManager = userManager;
             _emailService = emailService;
-            _roleManager = roleManager;
         }
 
         public async Task<Result> CadastraUsuarioAsync(CreateUsuarioDTO createDTO)
         {
             var usuario = _mapper.Map<Usuario>(createDTO);
-            var identityUser = _mapper.Map<IdentityUser<int>>(usuario);
+            var identityUser = _mapper.Map<CustomIdentityUser>(usuario);
             var resultadoIdentity = await _userManager.CreateAsync(identityUser, createDTO.Password);
-            var createRoleResult = _roleManager.CreateAsync(new IdentityRole<int>("admin")).Result;
-            var usuarioRoleResult = _userManager.AddToRoleAsync(identityUser, "admin");
+            _userManager.AddToRoleAsync(identityUser, "regular");
             if (resultadoIdentity.Succeeded)
             {
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);

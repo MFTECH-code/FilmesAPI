@@ -1,5 +1,4 @@
 ﻿using Alura.UsuariosAPI.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,13 +8,14 @@ namespace Alura.UsuariosAPI.Services
 {
     public class TokenService
     {
-        public Token CreateToken(IdentityUser<int> usuario, string? role)
+        public Token CreateToken(CustomIdentityUser usuario, string? role)
         {
             var direitosUsuario = new Claim[]
             {
                 new Claim("username", usuario.UserName),
                 new Claim("id", usuario.Id.ToString()),
-                new Claim(ClaimTypes.Role, role)
+                new Claim(ClaimTypes.Role, role),
+                new Claim(ClaimTypes.DateOfBirth, usuario.DataNascimento.ToString())
             };
 
             var chave = new SymmetricSecurityKey(
